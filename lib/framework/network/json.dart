@@ -23,6 +23,10 @@ class Json with _$Json {
     return Json(data);
   }
 
+  List<T> mapList<T>(String key, T Function(Map<String, dynamic> json) map) {
+    return list<Map<String, dynamic>>(key).map(map).toList();
+  }
+
   List<T> list<T>(String key) {
     final list = value[key];
     if (list == null || list is! List<dynamic>) {

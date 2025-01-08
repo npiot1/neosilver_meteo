@@ -42,7 +42,7 @@ class _WeatherAppState extends State<WeatherApp> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("Neosilver Weather"),
         ),
-        body: const SavedCities() // This trailing comma makes auto-formatting nicer for build methods.
+        body: const AddCity() // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

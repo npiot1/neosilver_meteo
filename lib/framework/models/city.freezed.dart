@@ -22,8 +22,8 @@ City _$CityFromJson(Map<String, dynamic> json) {
 mixin _$City {
   String get zip => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get lat => throw _privateConstructorUsedError;
-  String get lon => throw _privateConstructorUsedError;
+  double get lat => throw _privateConstructorUsedError;
+  double get lon => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $CityCopyWith<$Res> {
   factory $CityCopyWith(City value, $Res Function(City) then) =
       _$CityCopyWithImpl<$Res, City>;
   @useResult
-  $Res call({String zip, String name, String lat, String lon, String country});
+  $Res call({String zip, String name, double lat, double lon, String country});
 }
 
 /// @nodoc
@@ -70,11 +70,11 @@ class _$CityCopyWithImpl<$Res, $Val extends City>
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       lon: null == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$CityImplCopyWith<$Res> implements $CityCopyWith<$Res> {
       __$$CityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String zip, String name, String lat, String lon, String country});
+  $Res call({String zip, String name, double lat, double lon, String country});
 }
 
 /// @nodoc
@@ -121,11 +121,11 @@ class __$$CityImplCopyWithImpl<$Res>
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       lon: null == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -140,8 +140,8 @@ class _$CityImpl implements _City {
   _$CityImpl(
       {this.zip = "",
       this.name = "",
-      this.lat = "",
-      this.lon = "",
+      this.lat = 0,
+      this.lon = 0,
       this.country = ""});
 
   factory _$CityImpl.fromJson(Map<String, dynamic> json) =>
@@ -155,10 +155,10 @@ class _$CityImpl implements _City {
   final String name;
   @override
   @JsonKey()
-  final String lat;
+  final double lat;
   @override
   @JsonKey()
-  final String lon;
+  final double lon;
   @override
   @JsonKey()
   final String country;
@@ -202,8 +202,8 @@ abstract class _City implements City {
   factory _City(
       {final String zip,
       final String name,
-      final String lat,
-      final String lon,
+      final double lat,
+      final double lon,
       final String country}) = _$CityImpl;
 
   factory _City.fromJson(Map<String, dynamic> json) = _$CityImpl.fromJson;
@@ -213,9 +213,9 @@ abstract class _City implements City {
   @override
   String get name;
   @override
-  String get lat;
+  double get lat;
   @override
-  String get lon;
+  double get lon;
   @override
   String get country;
   @override

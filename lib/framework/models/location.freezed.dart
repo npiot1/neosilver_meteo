@@ -20,10 +20,11 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Location {
-  String get lat => throw _privateConstructorUsedError;
-  String get lon => throw _privateConstructorUsedError;
+  double get lat => throw _privateConstructorUsedError;
+  double get lon => throw _privateConstructorUsedError;
   String get timezone => throw _privateConstructorUsedError;
-  String get timezone_offset => throw _privateConstructorUsedError;
+  @JsonKey(name: 'timezone_offset')
+  int get timezoneOffset => throw _privateConstructorUsedError;
   Current get current => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,10 +39,10 @@ abstract class $LocationCopyWith<$Res> {
       _$LocationCopyWithImpl<$Res, Location>;
   @useResult
   $Res call(
-      {String lat,
-      String lon,
+      {double lat,
+      double lon,
       String timezone,
-      String timezone_offset,
+      @JsonKey(name: 'timezone_offset') int timezoneOffset,
       Current current});
 
   $CurrentCopyWith<$Res> get current;
@@ -63,26 +64,26 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
     Object? lat = null,
     Object? lon = null,
     Object? timezone = null,
-    Object? timezone_offset = null,
+    Object? timezoneOffset = null,
     Object? current = null,
   }) {
     return _then(_value.copyWith(
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       lon: null == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       timezone: null == timezone
           ? _value.timezone
           : timezone // ignore: cast_nullable_to_non_nullable
               as String,
-      timezone_offset: null == timezone_offset
-          ? _value.timezone_offset
-          : timezone_offset // ignore: cast_nullable_to_non_nullable
-              as String,
+      timezoneOffset: null == timezoneOffset
+          ? _value.timezoneOffset
+          : timezoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
@@ -108,10 +109,10 @@ abstract class _$$LocationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String lat,
-      String lon,
+      {double lat,
+      double lon,
       String timezone,
-      String timezone_offset,
+      @JsonKey(name: 'timezone_offset') int timezoneOffset,
       Current current});
 
   @override
@@ -132,26 +133,26 @@ class __$$LocationImplCopyWithImpl<$Res>
     Object? lat = null,
     Object? lon = null,
     Object? timezone = null,
-    Object? timezone_offset = null,
+    Object? timezoneOffset = null,
     Object? current = null,
   }) {
     return _then(_$LocationImpl(
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       lon: null == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       timezone: null == timezone
           ? _value.timezone
           : timezone // ignore: cast_nullable_to_non_nullable
               as String,
-      timezone_offset: null == timezone_offset
-          ? _value.timezone_offset
-          : timezone_offset // ignore: cast_nullable_to_non_nullable
-              as String,
+      timezoneOffset: null == timezoneOffset
+          ? _value.timezoneOffset
+          : timezoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
@@ -164,10 +165,10 @@ class __$$LocationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LocationImpl implements _Location {
   _$LocationImpl(
-      {this.lat = "",
-      this.lon = "",
+      {this.lat = 0,
+      this.lon = 0,
       this.timezone = "",
-      this.timezone_offset = "",
+      @JsonKey(name: 'timezone_offset') this.timezoneOffset = 0,
       this.current = null});
 
   factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
@@ -175,23 +176,23 @@ class _$LocationImpl implements _Location {
 
   @override
   @JsonKey()
-  final String lat;
+  final double lat;
   @override
   @JsonKey()
-  final String lon;
+  final double lon;
   @override
   @JsonKey()
   final String timezone;
   @override
-  @JsonKey()
-  final String timezone_offset;
+  @JsonKey(name: 'timezone_offset')
+  final int timezoneOffset;
   @override
   @JsonKey()
   final Current current;
 
   @override
   String toString() {
-    return 'Location(lat: $lat, lon: $lon, timezone: $timezone, timezone_offset: $timezone_offset, current: $current)';
+    return 'Location(lat: $lat, lon: $lon, timezone: $timezone, timezoneOffset: $timezoneOffset, current: $current)';
   }
 
   @override
@@ -203,15 +204,15 @@ class _$LocationImpl implements _Location {
             (identical(other.lon, lon) || other.lon == lon) &&
             (identical(other.timezone, timezone) ||
                 other.timezone == timezone) &&
-            (identical(other.timezone_offset, timezone_offset) ||
-                other.timezone_offset == timezone_offset) &&
+            (identical(other.timezoneOffset, timezoneOffset) ||
+                other.timezoneOffset == timezoneOffset) &&
             (identical(other.current, current) || other.current == current));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, lat, lon, timezone, timezone_offset, current);
+      Object.hash(runtimeType, lat, lon, timezone, timezoneOffset, current);
 
   @JsonKey(ignore: true)
   @override
@@ -229,23 +230,24 @@ class _$LocationImpl implements _Location {
 
 abstract class _Location implements Location {
   factory _Location(
-      {final String lat,
-      final String lon,
+      {final double lat,
+      final double lon,
       final String timezone,
-      final String timezone_offset,
+      @JsonKey(name: 'timezone_offset') final int timezoneOffset,
       final Current current}) = _$LocationImpl;
 
   factory _Location.fromJson(Map<String, dynamic> json) =
       _$LocationImpl.fromJson;
 
   @override
-  String get lat;
+  double get lat;
   @override
-  String get lon;
+  double get lon;
   @override
   String get timezone;
   @override
-  String get timezone_offset;
+  @JsonKey(name: 'timezone_offset')
+  int get timezoneOffset;
   @override
   Current get current;
   @override

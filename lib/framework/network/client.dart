@@ -24,7 +24,7 @@ class ApiClient {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         options.queryParameters.addAll({
-          'appid': 'ApiKey',
+          'appid': Config.get.apiKey,
         });
         return handler.next(options);
       },
@@ -41,7 +41,7 @@ class ApiClient {
       Http http,
       String path, {
         String? url,
-        T? mapData(Json json)?,
+        T? Function(Json json)? mapData,
         Object? body,
         Map<String, dynamic>? queryParameters,
         Map<String, dynamic>? headers,

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'saved_cities_state.dart';
+part of 'add_city_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ScreenState {
-//Saved cities list
+//result cities search
   List<City> get cities => throw _privateConstructorUsedError;
+  String get searchText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ScreenStateCopyWith<ScreenState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $ScreenStateCopyWith<$Res> {
           ScreenState value, $Res Function(ScreenState) then) =
       _$ScreenStateCopyWithImpl<$Res, ScreenState>;
   @useResult
-  $Res call({List<City> cities});
+  $Res call({List<City> cities, String searchText});
 }
 
 /// @nodoc
@@ -47,12 +48,17 @@ class _$ScreenStateCopyWithImpl<$Res, $Val extends ScreenState>
   @override
   $Res call({
     Object? cities = null,
+    Object? searchText = null,
   }) {
     return _then(_value.copyWith(
       cities: null == cities
           ? _value.cities
           : cities // ignore: cast_nullable_to_non_nullable
               as List<City>,
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -65,7 +71,7 @@ abstract class _$$ScreenStateImplCopyWith<$Res>
       __$$ScreenStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<City> cities});
+  $Res call({List<City> cities, String searchText});
 }
 
 /// @nodoc
@@ -80,12 +86,17 @@ class __$$ScreenStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? cities = null,
+    Object? searchText = null,
   }) {
     return _then(_$ScreenStateImpl(
       cities: null == cities
           ? _value._cities
           : cities // ignore: cast_nullable_to_non_nullable
               as List<City>,
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -93,12 +104,13 @@ class __$$ScreenStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ScreenStateImpl implements _ScreenState {
-  const _$ScreenStateImpl({final List<City> cities = const []})
+  const _$ScreenStateImpl(
+      {final List<City> cities = const [], this.searchText = ""})
       : _cities = cities;
 
-//Saved cities list
+//result cities search
   final List<City> _cities;
-//Saved cities list
+//result cities search
   @override
   @JsonKey()
   List<City> get cities {
@@ -108,8 +120,12 @@ class _$ScreenStateImpl implements _ScreenState {
   }
 
   @override
+  @JsonKey()
+  final String searchText;
+
+  @override
   String toString() {
-    return 'ScreenState(cities: $cities)';
+    return 'ScreenState(cities: $cities, searchText: $searchText)';
   }
 
   @override
@@ -117,12 +133,14 @@ class _$ScreenStateImpl implements _ScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScreenStateImpl &&
-            const DeepCollectionEquality().equals(other._cities, _cities));
+            const DeepCollectionEquality().equals(other._cities, _cities) &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_cities));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_cities), searchText);
 
   @JsonKey(ignore: true)
   @override
@@ -132,10 +150,13 @@ class _$ScreenStateImpl implements _ScreenState {
 }
 
 abstract class _ScreenState implements ScreenState {
-  const factory _ScreenState({final List<City> cities}) = _$ScreenStateImpl;
+  const factory _ScreenState(
+      {final List<City> cities, final String searchText}) = _$ScreenStateImpl;
 
-  @override //Saved cities list
+  @override //result cities search
   List<City> get cities;
+  @override
+  String get searchText;
   @override
   @JsonKey(ignore: true)
   _$$ScreenStateImplCopyWith<_$ScreenStateImpl> get copyWith =>

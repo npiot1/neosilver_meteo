@@ -8,8 +8,8 @@ class City with _$City {
   factory City({
     @Default("") String zip,
     @Default("") String name,
-    @Default("") String lat,
-    @Default("") String lon,
+    @Default(0) double lat,
+    @Default(0) double lon,
     @Default("") String country
   }) = _City;
 
