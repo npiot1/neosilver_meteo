@@ -6,6 +6,7 @@ import 'package:riverpod/riverpod.dart';
 import '../../config.dart';
 import '../utils/enum.dart';
 import 'json.dart';
+import 'logger.dart';
 
 enum Http { post, get, put, delete }
 
@@ -35,6 +36,7 @@ class ApiClient {
         return handler.next(e);
       },
     ));
+    dio.interceptors.add(LoggerInterceptor());
   }
 
   Future<ApiResponse<T>> request<T>(

@@ -17,20 +17,26 @@ class AddCity extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<City> resSearch = ref.watch(_controllerPod.select((value) => value.cities));
 
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            ref.read(_controllerPod.notifier).getCities("Londres");
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white, backgroundColor: Colors.blue,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Add city"),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              ref.read(_controllerPod.notifier).getCities("Londres");
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white, backgroundColor: Colors.blue,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+            child: const Text('Click me')
           ),
-          child: const Text('Click me')
-        ),
-        Text(resSearch.toString())
-      ],
+          Text(resSearch.toString())
+        ],
+      ),
     );
   }
 }

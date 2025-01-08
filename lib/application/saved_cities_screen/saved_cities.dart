@@ -14,7 +14,14 @@ class SavedCities extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Text("salut");
+
+    List<City> savedCities = ref.watch(_controllerPod.select((value) => value.cities));
+
+    if(savedCities.isEmpty) {
+      return const Center(child: Text("No city saved !", style: TextStyle(fontSize: 24),),);
+    } else {
+      return const Text("salut");
+    }
   }
 }
 
