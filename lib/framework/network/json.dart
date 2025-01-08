@@ -23,4 +23,16 @@ class Json with _$Json {
     return Json(data);
   }
 
+  List<T> list<T>(String key) {
+    final list = value[key];
+    if (list == null || list is! List<dynamic>) {
+      return [];
+    }
+    try {
+      return list.cast<T>();
+    } catch (e, s) {
+      return [];
+    }
+  }
+
 }

@@ -1,5 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:neosilver_meteo/framework/network/response.dart';
+import 'package:neosilver_meteo/framework/utils/int.dart';
 import 'package:riverpod/riverpod.dart';
+
+import '../../config.dart';
+import '../utils/enum.dart';
+import 'json.dart';
 
 enum Http { post, get, put, delete }
 
@@ -29,6 +35,53 @@ class ApiClient {
         return handler.next(e);
       },
     ));
+  }
+
+  Future<ApiResponse<T>> request<T>(
+      Http http,
+      String path, {
+        String? url,
+        T? mapData(Json json)?,
+        Object? body,
+        Map<String, dynamic>? queryParameters,
+        Map<String, dynamic>? headers,
+      }) async {
+
+    final method = enumToString(http).toUpperCase();
+    url ??= Config.get.apiKey;
+    final response = await dio.fetch(
+        RequestOptions(
+            path: path,
+            method: method,
+            headers: headers,
+            data: body,
+            queryParameters: queryParameters,
+            baseUrl: url
+        )
+    );
+
+    if (response.statusCode == null) {
+      return const ApiResponse.failure(kind: ApiFailure.noResponse);
+    }
+
+    final json = Json.parse(response.data);
+    if (response.statusCode!.between(200, 299)) {
+      if (mapData != null) {
+        final data = mapData(json);
+        if (data != null) {
+          return ApiResponse.success(data: data, json: json);
+        } else {
+          return const ApiResponse.failure(kind: ApiFailure.business);
+        }
+      } else {
+        return ApiResponse.success(json: json);
+      }
+    }
+    else {
+      return ApiResponse.failure(kind: ApiFailure.business, errors: json.list('errors'));
+    }
+
+
   }
 
 }
