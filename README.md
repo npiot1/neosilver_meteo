@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+Run code generation command : dart run build_runner build
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
