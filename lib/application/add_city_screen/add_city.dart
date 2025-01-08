@@ -21,7 +21,7 @@ class AddCity extends ConsumerWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            ref.read(_controllerPod.notifier).getCities("Lond");
+            ref.read(_controllerPod.notifier).getCities("Londres");
           },
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white, backgroundColor: Colors.blue,
