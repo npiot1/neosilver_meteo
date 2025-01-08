@@ -5,8 +5,11 @@ A new Flutter project.
 Run code generation command : dart run build_runner build
 
 To run the project create .env file at root with :
+
 API_KEY -> ApiKey from https://openweathermap.org/
+
 API_URL -> Api url with version (ex : https://api.openweathermap.org/data/3.0/)
+
 API_URL_GEO -> Api geo url with version (ex : https://api.openweathermap.org/geo/1.0/)
 
 ## Getting Started

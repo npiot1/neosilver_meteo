@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'application/weather_screen/weather.dart';
+import 'package:neosilver_meteo/application/presentation.dart';
 import 'config.dart';
 
 void main() async {
@@ -22,6 +21,28 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const WeatherApp(),
+    );
+  }
+}
+
+class WeatherApp extends StatefulWidget {
+  const WeatherApp({super.key});
+
+  @override
+  State<WeatherApp> createState() => _WeatherAppState();
+}
+
+
+class _WeatherAppState extends State<WeatherApp> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Neosilver Weather"),
+        ),
+        body: const SavedCities() // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
