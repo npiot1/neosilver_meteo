@@ -3,6 +3,7 @@ library add_city;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:neosilver_meteo/framework/repository/app.dart';
 import 'package:neosilver_meteo/framework/repository/city.dart';
 import 'package:neosilver_meteo/framework/utils/flag.dart';
 import '../../framework/models/city.dart';
@@ -112,7 +113,11 @@ class CityListItem extends ConsumerWidget {
                 backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               ),
               onPressed: () {
-                ref.read(_controllerPod.notifier).saveCity(city);
+                ref.read(_controllerPod.notifier).saveCity(city).whenComplete(() {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Added to favorite"),
+                  ));
+                },);
               },
               child: const Text(
                 '+',
