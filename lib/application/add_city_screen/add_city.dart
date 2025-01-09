@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neosilver_meteo/framework/repository/city.dart';
+import 'package:neosilver_meteo/framework/utils/flag.dart';
 import '../../framework/models/city.dart';
-import '../saved_cities_screen/saved_cities_state.dart';
+import 'add_city_state.dart';
 
 part 'add_city_controller.dart';
 
@@ -15,7 +16,20 @@ class AddCity extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<City> resSearch = ref.watch(_controllerPod.select((value) => value.cities));
+    List<City> res = ref.watch(_controllerPod.select((value) => value.cities));
+    String searchText = ref.watch(_controllerPod.select((value) => value.searchText));
+
+    Set<String> uniqueCombinations = {};
+    List<City> resSearch = [];
+
+    for (var item in res) {
+      String key = '${item.name}-${item.country}';
+      if (!uniqueCombinations.contains(key)) {
+        uniqueCombinations.add(key);
+        resSearch.add(item);
+      }
+    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -24,19 +38,90 @@ class AddCity extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              ref.read(_controllerPod.notifier).getCities("Londres");
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+          child: TextField(
+            onChanged: (value) {
+              ref.read(_controllerPod.notifier).setSearchText(value);
+              if(value.length>2) {
+                ref.read(_controllerPod.notifier).getCities();
+              }
             },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white, backgroundColor: Colors.blue,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Search city',
             ),
-            child: const Text('Click me')
           ),
-          Text(resSearch.toString())
+        ),
+
+          //Text(resSearch.map((e) => e.name + ' ' + e.country,).toString()),
+          if(resSearch.isNotEmpty && searchText.length>2)
+            ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: resSearch.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    SizedBox(
+                        height: 50,
+                        child: CityListItem(city: resSearch[index],)
+                    ),
+                    if(index<resSearch.length-1)
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+                  ]
+                );
+              }
+          )
+          else
+            const Text("No result")
         ],
       ),
+    );
+  }
+}
+
+class CityListItem extends ConsumerWidget {
+  const CityListItem({super.key, required this.city});
+
+  final City city;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var languageCode = WidgetsBinding.instance.window.locale.languageCode;
+    var cityName = city.localNames != null && city.localNames!.containsKey(languageCode)
+        ? city.localNames![languageCode]
+        : city.name;
+    return Stack(
+      children: [Row(
+        children: [
+          Expanded(child: Center(child: Text('$cityName'))),
+          Expanded(child: Center(child: Text(countryCodeToFlag(city.country), style: TextStyle(fontSize: 30),)))
+      ],),
+        Align(
+          alignment: Alignment.centerRight,
+          child: SizedBox(
+            width: 60,
+            height: 32,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              onPressed: () {
+                ref.read(_controllerPod.notifier).saveCity(city);
+              },
+              child: const Text(
+                '+',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+      ]
     );
   }
 }

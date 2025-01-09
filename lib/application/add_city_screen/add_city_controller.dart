@@ -10,9 +10,17 @@ class _Controller extends StateNotifier<ScreenState> {
 
   _Controller(this.ref) : super(const ScreenState());
 
-  void getCities(String q) async {
-    final result = await ref.read(CityRepository.pod).getCities(q);
+  void getCities() async {
+    final result = await ref.read(CityRepository.pod).getCities(state.searchText);
     state = state.copyWith(cities: result);
+  }
+
+  void setSearchText(String q) {
+    state = state.copyWith(searchText: q);
+  }
+
+  void saveCity(City city) {
+
   }
 
 }
