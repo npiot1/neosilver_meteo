@@ -50,7 +50,7 @@ class ApiClient {
       }) async {
 
     final method = enumToString(http).toUpperCase();
-    url ??= Config.get.apiKey;
+    url ??= Config.get.apiUrl;
     final response = await dio.fetch(
         RequestOptions(
             path: path,

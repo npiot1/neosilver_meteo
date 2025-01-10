@@ -30,4 +30,8 @@ class _Controller extends StateNotifier<ScreenState> {
     resCities.remove(city);
     state = state.copyWith(cities: resCities);
   }
+
+  Future<WeatherData> getCityData(City city) async {
+    return await ref.read(WeatherDataRepository.pod).getCityData(city);
+  }
 }

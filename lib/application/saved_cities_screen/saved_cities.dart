@@ -4,10 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neosilver_meteo/application/saved_cities_screen/saved_cities_state.dart';
+import 'package:neosilver_meteo/framework/repository/weather_data.dart';
 
 import '../../framework/models/city.dart';
+import '../../framework/models/weather_data.dart';
 import '../../framework/repository/app.dart';
 import '../../framework/utils/flag.dart';
+import '../weather_data/weather_data.dart';
 
 part 'saved_cities_controller.dart';
 
@@ -32,7 +35,21 @@ class SavedCities extends ConsumerWidget {
                 children: [
                   SizedBox(
                       height: 50,
-                      child: SavedCityItem(city: savedCities[index],)
+                      child: GestureDetector(
+                          onTap: () {
+                            showDialog(context: context, builder: (context) {
+                              return FutureBuilder(
+                                  future: ref.read(_controllerPod.notifier).getCityData(savedCities[index]),
+                                  builder: (context, snapshot) {
+                                    if(snapshot.hasData) {
+                                      return WeatherDataWidget(weatherData: snapshot.data!, name: savedCities[index].name);
+                                    } else {
+                                      return const SizedBox(height: 50, width: 50, child: Center(child: CircularProgressIndicator()));
+                                    }
+                                  },);
+                            },);
+                          },
+                          child: Container(color: Colors.white, child: SavedCityItem(city: savedCities[index],)))
                   ),
                   if(index<savedCities.length-1)
                     const Divider(
