@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neosilver_meteo/application/saved_cities_screen/saved_cities_state.dart';
 
 import '../../framework/models/city.dart';
+import '../../framework/repository/app.dart';
+import '../../framework/utils/flag.dart';
 
 part 'saved_cities_controller.dart';
 
@@ -20,8 +22,75 @@ class SavedCities extends ConsumerWidget {
     if(savedCities.isEmpty) {
       return const Center(child: Text("No city saved !", style: TextStyle(fontSize: 24),),);
     } else {
-      return const Text("salut");
+      return ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(8),
+          itemCount: savedCities.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+                children: [
+                  SizedBox(
+                      height: 50,
+                      child: SavedCityItem(city: savedCities[index],)
+                  ),
+                  if(index<savedCities.length-1)
+                    const Divider(
+                      color: Colors.black,
+                      thickness: 1,
+                    ),
+                ]
+            );
+          }
+      );
     }
   }
 }
+
+class SavedCityItem extends ConsumerWidget {
+  const SavedCityItem({super.key, required this.city});
+
+  final City city;
+
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var languageCode = WidgetsBinding.instance.window.locale.languageCode;
+    var cityName = city.localNames != null && city.localNames!.containsKey(languageCode)
+        ? city.localNames![languageCode]
+        : city.name;
+    return Stack(
+        children: [Row(
+          children: [
+            Expanded(child: Center(child: Text('$cityName'))),
+            Expanded(child: Center(child: Text(countryCodeToFlag(city.country), style: const TextStyle(fontSize: 30),)))
+          ],),
+          Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: 60,
+              height: 32,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                ),
+                onPressed: () {
+                  ref.read(_controllerPod.notifier).deleteCity(city).whenComplete(() {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("City removed"),
+                    ));
+                  },);
+                },
+                child: const Text(
+                  '-',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ),
+            ),
+          ),
+        ]
+    );
+  }
+}
+
 

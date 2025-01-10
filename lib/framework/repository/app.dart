@@ -34,6 +34,7 @@ class AppRepository {
     final String updatedJsonString =
     json.encode(cityList.map((city) => city.toJson()).toList());
     await prefs.setString(cityListKey, updatedJsonString);
+    ref.refresh(AppRepository.sharedPrefs);
   }
 
   Future<List<City>> getFavoriteCities() async {
@@ -48,7 +49,7 @@ class AppRepository {
     return jsonList.map((json) => City.fromJson(json)).toList();
   }
 
-  Future<void> removeFavoriteCity(String cityName) async {
+  Future<void> removeFavoriteCity(double lat, double lon) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? jsonString = prefs.getString(cityListKey);
     if (jsonString == null) {
@@ -58,11 +59,12 @@ class AppRepository {
     final List<dynamic> jsonList = json.decode(jsonString);
     List<City> cityList = jsonList.map((json) => City.fromJson(json)).toList();
 
-    cityList = cityList.where((city) => city.name != cityName).toList();
+    cityList = cityList.where((city) => city.lat != lat && city.lon != lon).toList();
 
     final String updatedJsonString =
     json.encode(cityList.map((city) => city.toJson()).toList());
     await prefs.setString(cityListKey, updatedJsonString);
+    ref.refresh(AppRepository.sharedPrefs);
   }
 
 }
