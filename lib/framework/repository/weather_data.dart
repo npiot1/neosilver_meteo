@@ -15,14 +15,14 @@ class WeatherDataRepository {
   WeatherDataRepository._(this.ref);
   final Ref ref;
 
-  Future<WeatherData> getCityData(City city) async {
+  Future<WeatherData> getLocationData({City? city, double lat = 0.0, double lon = 0.0}) async {
 
     final response = await ref.read(ApiClient.pod).request<WeatherData>(
       Http.get,
       '/weather',
       queryParameters: {
-        "lat": city.lat,
-        "lon": city.lon,
+        "lat": city != null ? city.lat : lat,
+        "lon": city != null ? city.lon : lon,
         //"exclude": "current,hourly,daily,alerts"
       },
       mapData: (json) => WeatherData.fromJson(json.value),);

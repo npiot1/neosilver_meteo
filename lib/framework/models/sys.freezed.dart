@@ -135,7 +135,7 @@ class __$$SysImplCopyWithImpl<$Res> extends _$SysCopyWithImpl<$Res, _$SysImpl>
 @JsonSerializable()
 class _$SysImpl implements _Sys {
   _$SysImpl(
-      {required this.id,
+      {this.id = 0,
       this.type = 0,
       this.country = "",
       this.sunrise = 0,
@@ -145,6 +145,7 @@ class _$SysImpl implements _Sys {
       _$$SysImplFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
   @JsonKey()
@@ -197,7 +198,7 @@ class _$SysImpl implements _Sys {
 
 abstract class _Sys implements Sys {
   factory _Sys(
-      {required final int id,
+      {final int id,
       final int type,
       final String country,
       final int sunrise,

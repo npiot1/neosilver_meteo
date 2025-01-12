@@ -6,7 +6,7 @@ part 'sys.g.dart';
 @freezed
 class Sys with _$Sys {
   factory Sys({
-    required int id,
+    @Default(0) int id,
     @Default(0) int type,
     @Default("") String country,
     @Default(0) int sunrise,

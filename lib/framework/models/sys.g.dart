@@ -7,7 +7,7 @@ part of 'sys.dart';
 // **************************************************************************
 
 _$SysImpl _$$SysImplFromJson(Map<String, dynamic> json) => _$SysImpl(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt() ?? 0,
       type: (json['type'] as num?)?.toInt() ?? 0,
       country: json['country'] as String? ?? "",
       sunrise: (json['sunrise'] as num?)?.toInt() ?? 0,

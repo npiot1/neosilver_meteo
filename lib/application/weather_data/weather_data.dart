@@ -76,6 +76,7 @@ class WeatherDataWidget extends StatelessWidget {
               children: [
                 Image.network(
                   "http://openweathermap.org/img/wn/${weather.icon}@2x.png",
+                  color: Colors.grey,
                   width: 50,
                   height: 50,
                 ),
@@ -110,10 +111,10 @@ class WeatherDataWidget extends StatelessWidget {
             const Text("Temperature",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text("Current: ${main?.temp} K", style: TextStyle(fontSize: 16)),
-            Text("Feels Like: ${main?.feelsLike} K",
+            Text("Current: ${main?.temp} K (${(main!.temp - 273.15).toStringAsFixed(2)} °C)", style: TextStyle(fontSize: 16)),
+            Text("Feels Like: ${main?.feelsLike} K (${(main.feelsLike - 273.15).toStringAsFixed(2)} °C)",
                 style: const TextStyle(fontSize: 16)),
-            Text("Min: ${main?.tempMin} K, Max: ${main?.tempMax} K",
+            Text("Min: ${main?.tempMin} K (${(main.tempMin - 273.15).toStringAsFixed(2)} °C), Max: ${main?.tempMax} K (${(main.tempMax - 273.15).toStringAsFixed(2)} °C)",
                 style: const TextStyle(fontSize: 16)),
             Text("Humidity: ${main?.humidity}%", style: const TextStyle(fontSize: 16)),
             Text("Pressure: ${main?.pressure} hPa",
