@@ -1,26 +1,106 @@
-# open_weather_flutter
+# Flutter Weather App 🌤️
 
-A new Flutter project.
+A simple yet functional Flutter weather application built to demonstrate the integration of several essential Flutter libraries and practices.
 
-Run code generation command : dart run build_runner build
+This app uses the **OpenWeatherMap API** to fetch current weather data based on:
+- **User's current location**
+- **User's saved cities**
 
-To run the project create .env file at root with :
+---
 
-API_KEY -> ApiKey from https://openweathermap.org/
+## ✨ Features
 
-API_URL -> Api url with version (ex : https://api.openweathermap.org/data/3.0/)
+- View weather data by current location or search
+- Save and delete favorite cities
+- Local caching using `SharedPreferences`
+- Clean architecture with `Riverpod` state management
+- Immutable data models with `Freezed`
+- HTTP requests using `Dio`
+- Environment configuration using `flutter_dotenv`
 
-API_URL_GEO -> Api geo url with version (ex : https://api.openweathermap.org/geo/1.0/)
+---
 
-## Getting Started
+## 🧰 Technologies & Libraries
 
-This project is a starting point for a Flutter application.
+| Library           | Usage                                        |
+|------------------|----------------------------------------------|
+| `freezed`        | Immutable data classes & union types         |
+| `riverpod`       | State management                             |
+| `dio`            | API calls to OpenWeatherMap                  |
+| `shared_preferences` | Local storage of favorite cities        |
+| `location`        | Show user's current position weather            |
+| `flutter_dotenv`  | Managing environment variables (.env file)  |
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Getting Started
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/npiot1/openweather_flutter.git
+cd openweather_flutter
+```
+
+### 2. Install dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Setup environment variables
+
+At the root of the project, create a `.env` file:
+
+```env
+API_KEY=your_api_key_here
+API_URL=https://api.openweathermap.org/data/2.5/
+API_URL_GEO=https://api.openweathermap.org/geo/1.0/
+```
+
+You can get your API key by signing up at [https://openweathermap.org/](https://openweathermap.org/).
+
+### 4. Generate files
+
+Run the following command to generate Freezed and other related files:
+
+```bash
+dart run build_runner build
+```
+
+---
+
+## 📱 Screenshots
+
+Here are some preview screens of the app in action:
+
+<p align="center">
+  <img src="https://github.com/npiot1/openweather_flutter/blob/42449de34def95d9fb3e62a40e104ec6d1a34113/assets/readme/home.png?raw=true" width="400"/>
+  <img src="https://github.com/npiot1/openweather_flutter/blob/42449de34def95d9fb3e62a40e104ec6d1a34113/assets/readme/city_weather_detail.png?raw=true" width="400"/>
+  <img src="https://github.com/npiot1/openweather_flutter/blob/42449de34def95d9fb3e62a40e104ec6d1a34113/assets/readme/add_city.png?raw=true" width="400"/>
+</p>
+
+
+---
+
+## 📦 Build and Run
+
+To run the app on your device or emulator:
+
+```bash
+flutter run
+```
+
+---
+
+## ✅ TODO
+
+- [ ] Current language support
+- [ ] Rearrange cities in home screen
+- [ ] Better UI, more informations on list items
+
+---
+
+## 📝 License
+
+This project is released under the MIT License. Feel free to use, modify, and share it as needed.
