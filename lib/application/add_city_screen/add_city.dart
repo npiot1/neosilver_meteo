@@ -3,9 +3,9 @@ library add_city;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:neosilver_meteo/framework/repository/app.dart';
-import 'package:neosilver_meteo/framework/repository/city.dart';
-import 'package:neosilver_meteo/framework/utils/flag.dart';
+import 'package:open_weather_flutter/framework/repository/app.dart';
+import 'package:open_weather_flutter/framework/repository/city.dart';
+import 'package:open_weather_flutter/framework/utils/flag.dart';
 import '../../framework/models/city.dart';
 import 'add_city_state.dart';
 
@@ -17,74 +17,63 @@ class AddCity extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<City> res = ref.watch(_controllerPod.select((value) => value.cities));
-    String searchText = ref.watch(_controllerPod.select((value) => value.searchText));
+    final res = ref.watch(_controllerPod.select((value) => value.cities));
+    final searchText = ref.watch(_controllerPod.select((value) => value.searchText));
 
-    Set<String> uniqueCombinations = {};
-    List<City> resSearch = [];
+    final uniqueCombinations = <String>{};
+    final resSearch = <City>[];
 
     for (var item in res) {
-      String key = '${item.name}-${item.country}';
+      final key = '${item.name}-${item.country}';
       if (!uniqueCombinations.contains(key)) {
         uniqueCombinations.add(key);
         resSearch.add(item);
       }
     }
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Add city"),
       ),
-      body: Column(
-        children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-          child: TextField(
-            onChanged: (value) {
-              ref.read(_controllerPod.notifier).setSearchText(value);
-              if(value.length>2) {
-                ref.read(_controllerPod.notifier).getCities();
-              }
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Search city',
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+              child: TextField(
+                onChanged: (value) {
+                  ref.read(_controllerPod.notifier).setSearchText(value);
+                  if (value.length > 2) {
+                    ref.read(_controllerPod.notifier).getCities();
+                  }
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Search city',
+                ),
+              ),
             ),
-          ),
+            if (searchText.length > 2)
+              Expanded(
+                child: resSearch.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: resSearch.length,
+                        itemBuilder: (context, index) {
+                          return CityListItem(city: resSearch[index]);
+                        },
+                      )
+                    : const Center(child: Text("No result")),
+              ),
+          ],
         ),
-
-          //Text(resSearch.map((e) => e.name + ' ' + e.country,).toString()),
-          if(resSearch.isNotEmpty && searchText.length>2)
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
-              itemCount: resSearch.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    SizedBox(
-                        height: 50,
-                        child: CityListItem(city: resSearch[index],)
-                    ),
-                    if(index<resSearch.length-1)
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 1,
-                      ),
-                  ]
-                );
-              }
-          )
-          else
-            const Text("No result")
-        ],
       ),
     );
   }
 }
+
 
 class CityListItem extends ConsumerWidget {
   const CityListItem({super.key, required this.city});
@@ -93,40 +82,44 @@ class CityListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var languageCode = WidgetsBinding.instance.window.locale.languageCode;
-    var cityName = city.localNames != null && city.localNames!.containsKey(languageCode)
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final cityName = city.localNames != null && city.localNames!.containsKey(languageCode)
         ? city.localNames![languageCode]
         : city.name;
-    return Stack(
-      children: [Row(
-        children: [
-          Expanded(child: Center(child: Text('$cityName'))),
-          Expanded(child: Center(child: Text(countryCodeToFlag(city.country), style: TextStyle(fontSize: 30),)))
-      ],),
-        Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: 60,
-            height: 32,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-              ),
-              onPressed: () {
-                ref.read(_controllerPod.notifier).saveCity(city).whenComplete(() {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Added to favorite"),
-                  ));
-                },);
-              },
-              child: const Text(
-                '+',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ),
-          ),
+
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: Text(
+          countryCodeToFlag(city.country),
+          style: const TextStyle(fontSize: 28),
         ),
-      ]
+        title: Text(
+          cityName!,
+          style: Theme.of(context).textTheme.titleMedium,
+          overflow: TextOverflow.ellipsis,
+        ),
+trailing: OutlinedButton(
+  onPressed: () {
+    ref.read(_controllerPod.notifier).saveCity(city).whenComplete(() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Added to favorites")),
+      );
+    });
+  },
+  style: OutlinedButton.styleFrom(
+    padding: const EdgeInsets.all(8),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+  ),
+  child: const Icon(Icons.add, size: 20),
+),
+
+      ),
     );
   }
 }
+

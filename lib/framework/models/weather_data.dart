@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:neosilver_meteo/framework/models/sys.dart';
-import 'package:neosilver_meteo/framework/models/weather.dart';
-import 'package:neosilver_meteo/framework/models/weather_main.dart';
-import 'package:neosilver_meteo/framework/models/wind.dart';
+import 'package:open_weather_flutter/framework/models/sys.dart';
+import 'package:open_weather_flutter/framework/models/weather.dart';
+import 'package:open_weather_flutter/framework/models/weather_main.dart';
+import 'package:open_weather_flutter/framework/models/wind.dart';
 
 import 'clouds.dart';
 import 'coord.dart';

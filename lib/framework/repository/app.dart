@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:neosilver_meteo/framework/models/city.dart';
+import 'package:open_weather_flutter/framework/models/city.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppRepository {

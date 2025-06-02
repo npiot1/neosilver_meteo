@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:neosilver_meteo/framework/models/weather.dart';
+import 'package:open_weather_flutter/framework/models/weather.dart';
 
 part 'weather_main.freezed.dart';
 part 'weather_main.g.dart';

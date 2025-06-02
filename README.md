@@ -1,4 +1,4 @@
-# neosilver_meteo
+# open_weather_flutter
 
 A new Flutter project.
 

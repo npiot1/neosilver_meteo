@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:neosilver_meteo/application/presentation.dart';
+import 'package:open_weather_flutter/application/presentation.dart';
 import 'config.dart';
 
 void main() async {
@@ -44,7 +44,7 @@ class _WeatherAppState extends State<WeatherApp> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: const Text("Neosilver Weather"),
+            title: const Text("Open Weather Flutter"),
           ),
           body: const SavedCities(),
         floatingActionButton: FloatingActionButton(

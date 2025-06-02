@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:neosilver_meteo/framework/network/response.dart';
-import 'package:neosilver_meteo/framework/utils/int.dart';
+import 'package:open_weather_flutter/framework/network/response.dart';
+import 'package:open_weather_flutter/framework/utils/int.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../config.dart';

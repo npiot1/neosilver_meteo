@@ -1,6 +1,6 @@
 {
-    "name": "neosilver_meteo",
-    "short_name": "neosilver_meteo",
+    "name": "open_weather_flutter",
+    "short_name": "open_weather_flutter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
